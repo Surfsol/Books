@@ -8,13 +8,13 @@ import incorrectBackground from '../assets/svgs/incorrectBackground.svg';
 import senhaSvg from '../assets/svgs/senhaSvg.svg';
 import emailSvg from '../assets/svgs/emailSvg.svg';
 import triangleIncorrect from '../assets/svgs/triangleIncorrect.svg';
-import { StyleSheet, Creds } from '../types';
+import { StyleSheet, Creds, User } from '../types';
 import { LogInApi } from '../services/api';
 
 const Login: React.FC = () => {
   const [creds, setCreds] = useState<Creds>({});
   const [incorrectPass, setIncorrectPass] = useState<boolean>();
-  const [user, setUser] = useState<any>();
+  const [user, setUser] = useState<User>();
 
   const handleCreds = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCreds({
@@ -31,8 +31,6 @@ const Login: React.FC = () => {
     setIncorrectPass(false)
   },[creds])
 
-
-  console.log({ user, incorrectPass });
   return (
     <div style={styles.container}>
       <img src={logo} style={styles.logo} />
@@ -63,6 +61,7 @@ const Login: React.FC = () => {
         <>
           <div style={styles.incorrectBackground}></div>
           <img src={triangleIncorrect} style={styles.triangleIncorrect} />
+          <div style={styles.error}>Email e/ou senha incorrectos</div>
         </>
       ) : null}
     </div>
@@ -203,4 +202,18 @@ const styles: StyleSheet = {
     transform: 'rotate(225deg)',
     backdropFilter: 'blur(2px)',
   },
+  error:{
+    position: 'absolute',
+    width: '207px',
+    height: '16px',
+    left: '131px',
+    top: '536px',
+    fontFamily: 'Heebo',
+    fontStyle: 'normal',
+    fontWeight: 'bold',
+    fontSize: '16px',
+    lineHeight: '16px',
+    color: '#FFFFFF',
+    
+  }
 };

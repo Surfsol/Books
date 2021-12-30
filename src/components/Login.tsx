@@ -9,7 +9,12 @@ import senhaSvg from '../assets/svgs/senhaSvg.svg';
 import emailSvg from '../assets/svgs/emailSvg.svg';
 import triangleIncorrect from '../assets/svgs/triangleIncorrect.svg';
 import { StyleSheet, Creds, User } from '../types';
-import { LogInApi } from '../services/api';
+import { logInApi, refreshTokenApi } from '../services/api';
+import { getToken } from './utils/tokens';
+import jwt_decode from 'jwt-decode';
+import { decryptUser } from './utils/tokens';
+
+
 
 const Login: React.FC = () => {
   const [creds, setCreds] = useState<Creds>({});
@@ -24,12 +29,26 @@ const Login: React.FC = () => {
   };
 
   const handleLogin = () => {
-      LogInApi(creds, setUser, setIncorrectPass)
+      logInApi(creds, setUser, setIncorrectPass)
   };
 
   useEffect(() => {
     setIncorrectPass(false)
   },[creds])
+
+  useEffect(() => {
+    const authToken = getToken('ioasys-auth')
+    if(authToken){
+      const decoded:any = jwt_decode(authToken);
+      const userInfo: any = getToken('ioasys-user')
+      if(decoded.vld > Date.now()){
+        setUser(decryptUser(userInfo))
+      } else {
+        const refresh: any = getToken('ioasys-refresh-token')
+        refreshTokenApi(refresh, setUser)
+      }
+    }
+  },[])
 
   return (
     <div style={styles.container}>

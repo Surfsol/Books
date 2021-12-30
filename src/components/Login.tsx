@@ -1,4 +1,4 @@
-import React, {useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import backgroundCover from '../assets/svgs/backgroundCover.svg';
 import logo from '../assets/svgs/logo.svg';
 import emailBackground from '../assets/svgs/emailBackground.svg';
@@ -13,6 +13,7 @@ import { logInApi, refreshTokenApi } from '../services/api';
 import { getToken } from './utils/tokens';
 import jwt_decode from 'jwt-decode';
 import { decryptUser } from './utils/tokens';
+import Home from './Home'
 
 const Login: React.FC = () => {
   const [creds, setCreds] = useState<Creds>({});
@@ -27,28 +28,30 @@ const Login: React.FC = () => {
   };
 
   const handleLogin = () => {
-      logInApi(creds, setUser, setIncorrectPass)
+    logInApi(creds, setUser, setIncorrectPass);
   };
 
   useEffect(() => {
-    setIncorrectPass(false)
-  },[creds])
+    setIncorrectPass(false);
+  }, [creds]);
 
   useEffect(() => {
-    const authToken = getToken('ioasys-auth')
-    if(authToken){
-      const decoded:any = jwt_decode(authToken);
-      const userInfo: any = getToken('ioasys-user')
-      if(decoded.vld > Date.now()){
-        setUser(decryptUser(userInfo))
+    const authToken = getToken('ioasys-auth');
+    if (authToken) {
+      const decoded: any = jwt_decode(authToken);
+      const userInfo: any = getToken('ioasys-user');
+      if (decoded.vld > Date.now()) {
+        setUser(decryptUser(userInfo));
       } else {
-        const refresh: any = getToken('ioasys-refresh-token')
-        refreshTokenApi(refresh, setUser)
+        const refresh: any = getToken('ioasys-refresh-token');
+        refreshTokenApi(refresh, setUser);
       }
     }
-  },[])
+  }, []);
 
-  return (
+  return user ? (
+    <Home user={user} />
+  ) : (
     <div style={styles.container}>
       <img src={logo} style={styles.logo} />
       <div style={styles.books}>Books</div>
@@ -219,7 +222,7 @@ const styles: StyleSheet = {
     transform: 'rotate(225deg)',
     backdropFilter: 'blur(2px)',
   },
-  error:{
+  error: {
     position: 'absolute',
     width: '207px',
     height: '16px',
@@ -231,6 +234,5 @@ const styles: StyleSheet = {
     fontSize: '16px',
     lineHeight: '16px',
     color: '#FFFFFF',
-    
-  }
+  },
 };

@@ -14,8 +14,6 @@ import { getToken } from './utils/tokens';
 import jwt_decode from 'jwt-decode';
 import { decryptUser } from './utils/tokens';
 
-
-
 const Login: React.FC = () => {
   const [creds, setCreds] = useState<Creds>({});
   const [incorrectPass, setIncorrectPass] = useState<boolean>();

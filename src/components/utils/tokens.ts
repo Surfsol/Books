@@ -4,8 +4,8 @@ const setToken = (key: string | null, value: string | null) => {
   if (key && value) localStorage.setItem(key, value);
 };
 
-const getToken = (key: string | null) => {
-  let token;
+const getToken = (key: string) => {
+  let token: any;
   if (key) {
     token = localStorage.getItem(key);
   }
@@ -21,10 +21,8 @@ const encryptUser = (data: any) => {
 };
 
 const decryptUser = (data: string) => {
-    console.log({data})
   const bytes = CryptoJS.AES.decrypt(data, password);
   const userString = bytes.toString(CryptoJS.enc.Utf8);
-  console.log({userString})
   const userObj = JSON.parse(userString)
   return userObj;
 };

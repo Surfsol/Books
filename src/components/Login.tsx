@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState } from 'react';
 import backgroundCover from '../assets/svgs/backgroundCover.svg';
 import logo from '../assets/svgs/logo.svg';
 import emailBackground from '../assets/svgs/emailBackground.svg';
@@ -9,10 +9,12 @@ import senhaSvg from '../assets/svgs/senhaSvg.svg';
 import emailSvg from '../assets/svgs/emailSvg.svg';
 import triangleIncorrect from '../assets/svgs/triangleIncorrect.svg';
 import { StyleSheet, Creds } from '../types';
+import { LogInApi } from '../services/api';
 
 const Login: React.FC = () => {
   const [creds, setCreds] = useState<Creds>({});
   const [incorrectPass, setIncorrectPass] = useState<boolean>();
+  const [user, setUser] = useState<any>();
 
   const handleCreds = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCreds({
@@ -21,6 +23,16 @@ const Login: React.FC = () => {
     });
   };
 
+  const handleLogin = () => {
+      LogInApi(creds, setUser, setIncorrectPass)
+  };
+
+  useEffect(() => {
+    setIncorrectPass(false)
+  },[creds])
+
+
+  console.log({ user, incorrectPass });
   return (
     <div style={styles.container}>
       <img src={logo} style={styles.logo} />
@@ -44,7 +56,9 @@ const Login: React.FC = () => {
       <div style={styles.emailSvg}></div>
       <div style={styles.email2Enter}></div>
       <div style={styles.senhaSvg}></div>
-      <div style={styles.enter}>Enter</div>
+      <div style={styles.enter} onClick={handleLogin}>
+        Enter
+      </div>
       {incorrectPass ? (
         <>
           <div style={styles.incorrectBackground}></div>

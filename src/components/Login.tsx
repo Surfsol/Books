@@ -1,28 +1,56 @@
-import React from 'react';
+import React, { useState } from 'react';
 import backgroundCover from '../assets/svgs/backgroundCover.svg';
 import logo from '../assets/svgs/logo.svg';
 import emailBackground from '../assets/svgs/emailBackground.svg';
-import emailback2 from '../assets/svgs/emailback2.svg';
+import passwordBackground from '../assets/svgs/emailback2.svg';
 import email2Enter from '../assets/svgs/email2Enter.svg';
 import incorrectBackground from '../assets/svgs/incorrectBackground.svg';
 import senhaSvg from '../assets/svgs/senhaSvg.svg';
 import emailSvg from '../assets/svgs/emailSvg.svg';
 import triangleIncorrect from '../assets/svgs/triangleIncorrect.svg';
-import { StyleSheet } from '../types';
+import { StyleSheet, Creds } from '../types';
 
 const Login: React.FC = () => {
+  const [creds, setCreds] = useState<Creds>({});
+  const [incorrectPass, setIncorrectPass] = useState<boolean>();
+
+  const handleCreds = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCreds({
+      ...creds,
+      [e.target.name]: e.target.value,
+    });
+  };
+
   return (
     <div style={styles.container}>
       <img src={logo} style={styles.logo} />
       <div style={styles.books}>Books</div>
       <div style={styles.emailBackground}></div>
-      <div style={styles.emailBackground2}></div>
+      <input
+        style={styles.emailInput}
+        type='email'
+        value={creds.email}
+        name='email'
+        onChange={handleCreds}
+      />
+      <div style={styles.passwordBackground}></div>
+      <input
+        style={styles.passwordInput}
+        type='password'
+        value={creds.password}
+        name='password'
+        onChange={handleCreds}
+      />
       <div style={styles.emailSvg}></div>
       <div style={styles.email2Enter}></div>
       <div style={styles.senhaSvg}></div>
       <div style={styles.enter}>Enter</div>
-      <div style={styles.incorrectBackground}></div>
-      <img src={triangleIncorrect} style={styles.triangleIncorrect} />
+      {incorrectPass ? (
+        <>
+          <div style={styles.incorrectBackground}></div>
+          <img src={triangleIncorrect} style={styles.triangleIncorrect} />
+        </>
+      ) : null}
     </div>
   );
 };
@@ -66,13 +94,43 @@ const styles: StyleSheet = {
     left: '115px',
     top: '360px',
   },
-  emailBackground2: {
-    backgroundImage: `url(${emailback2} )`,
+  emailInput: {
+    position: 'absolute',
+    width: '159px',
+    height: '24px',
+    left: '131px',
+    top: '388px',
+    fontFamily: 'Heebo',
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    fontSize: '16px',
+    lineHeight: '24px',
+    color: '#FFFFFF',
+    backgroundColor: 'transparent',
+    border: '0 transparent',
+  },
+  passwordBackground: {
+    backgroundImage: `url(${passwordBackground} )`,
     position: 'absolute',
     width: '368px',
     height: '60px',
     left: '115px',
     top: '436px',
+  },
+  passwordInput: {
+    position: 'absolute',
+    width: '65px',
+    height: '24px',
+    left: '131px',
+    top: '464px',
+    fontFamily: 'Heebo',
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    fontSize: '16px',
+    lineHeight: '24px',
+    color: '#FFFFFF',
+    backgroundColor: 'transparent',
+    border: '0 transparent',
   },
   emailSvg: {
     backgroundImage: `url(${emailSvg} )`,

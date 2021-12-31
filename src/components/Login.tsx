@@ -13,12 +13,13 @@ import { logInApi, refreshTokenApi } from '../services/api';
 import { getToken } from './utils/tokens';
 import jwt_decode from 'jwt-decode';
 import { decryptUser } from './utils/tokens';
-import Home from './Home'
+import Home from './Home';
 
 const Login: React.FC = () => {
   const [creds, setCreds] = useState<Creds>({});
   const [incorrectPass, setIncorrectPass] = useState<boolean>();
   const [user, setUser] = useState<User>();
+  const [books, setBooks] = useState<any>();
 
   const handleCreds = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCreds({
@@ -28,7 +29,7 @@ const Login: React.FC = () => {
   };
 
   const handleLogin = () => {
-    logInApi(creds, setUser, setIncorrectPass);
+    logInApi(creds, setUser, setIncorrectPass, setBooks);
   };
 
   useEffect(() => {
@@ -36,21 +37,23 @@ const Login: React.FC = () => {
   }, [creds]);
 
   useEffect(() => {
-    const authToken = getToken('ioasys-auth');
-    if (authToken) {
-      const decoded: any = jwt_decode(authToken);
-      const userInfo: any = getToken('ioasys-user');
-      if (decoded.vld > Date.now()) {
-        setUser(decryptUser(userInfo));
-      } else {
-        const refresh: any = getToken('ioasys-refresh-token');
-        refreshTokenApi(refresh, setUser);
+    if (!user) {
+      const authToken = getToken('ioasys-auth');
+      if (authToken) {
+        const decoded: any = jwt_decode(authToken);
+        const userInfo: any = getToken('ioasys-user');
+        if (decoded.vld > Date.now()) {
+          setUser(decryptUser(userInfo));
+        } else {
+          const refresh: any = getToken('ioasys-refresh-token');
+          refreshTokenApi(refresh, setUser, setBooks);
+        }
       }
     }
   }, []);
 
   return user ? (
-    <Home user={user} />
+    <Home user={user} books={books} />
   ) : (
     <div style={styles.container}>
       <img src={logo} style={styles.logo} />

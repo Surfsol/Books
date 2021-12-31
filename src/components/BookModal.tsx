@@ -1,22 +1,6 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
-
 import Modal from '@mui/material/Modal';
-import Book from './Book';
 import { EachBook, StyleSheet } from '../types';
-
-const style = {
-  position: 'absolute',
-  left: 298,
-  top: 80,
-  transform: 'translate(-50%, -50%)',
-  width: 769,
-  height: 608,
-  bgcolor: '#FFFFFF',
-  p: 4,
-  boxShadow: '0px 16px 80px rgba(0, 0, 0, 0.32)',
-  borderRadius: '4px',
-};
 
 type Props = {
   open: boolean;
@@ -25,7 +9,6 @@ type Props = {
 };
 
 const BookModal: React.FC<Props> = ({ open, setOpen, bookId }) => {
-  // const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen();
 
   const authorList = () => {
@@ -96,7 +79,7 @@ const styles: StyleSheet = {
     display: 'flex',
     flexDirection: 'row',
     left: '298px',
-    marginTop: '80px',
+    marginTop: '60px',
     marginBottom: '80px',
     width: '769px',
     height: '608px',
@@ -151,9 +134,9 @@ const styles: StyleSheet = {
     color: '#AB2680',
     width: '276px',
   },
-  allInfo:{
+  allInfo: {
     display: 'flex',
-    flexDirection:'row',
+    flexDirection: 'row',
     justifyContent: 'space-between',
   },
   informationKeys: {
@@ -190,7 +173,7 @@ const styles: StyleSheet = {
     lineHeight: '20px',
     textTransform: 'uppercase',
     overflow: 'hidden',
-    marginTop: '50px'
+    marginTop: '50px',
   },
   published: {
     fontFamily: 'Heebo',

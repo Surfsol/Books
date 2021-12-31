@@ -28,7 +28,6 @@ const Book: React.FC<Props> = ({ book, handleOpen }) => {
   return (
     <div style={styles.container} onClick={()=>handleOpen(book.id)}>
       <img style={styles.imageUrl} src={book.imageUrl} />
-
       <div style={styles.bookInfo}>
         <div style={styles.topInfo}>
           <div style={styles.title}>{book.title}</div>

@@ -49,15 +49,12 @@ const styles: StyleSheet = {
   container: {
     display: 'flex',
     flexDirection: 'row',
-    // alignItems: 'center',
     width: '272px',
     height: '160px',
     background: '#FFFFFF',
     boxShadow: '0px 6px 24px rgba(84, 16, 95, 0.13)',
     borderRadius: '4px',
-    marginLeft: '1.2%',
     marginBottom: '2%',
-    //marginRight: '1'
   },
   imageUrl: {
     width: '81px',
@@ -114,7 +111,6 @@ const styles: StyleSheet = {
     fontStyle: 'normal',
     fontWeight: 500,
     fontSize: '.75rem',
-    //lineHeight: '2rem',
     color: '#333333',
   },
   published: {
@@ -122,7 +118,6 @@ const styles: StyleSheet = {
     fontStyle: 'normal',
     fontWeight: 500,
     fontSize: '.75rem',
-    //lineHeight: '2rem',
     color: '#333333',
   },
 };

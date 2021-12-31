@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { EachBook, StyleSheet, User } from '../types';
 import logoBlack from '../assets/svgs/logoBlack.svg';
 import booksBackground from '../assets/svgs/booksBackground.svg';
-import bracket from '../assets/svgs/bracket.svg';
+import bracket from '../assets/svgs/bracket.png';
 import homeCircle from '../assets/svgs/homeCircle.svg';
 import homeGreaterThan from '../assets/svgs/homeGreaterThan.svg';
 import homeLessthan from '../assets/svgs/homeLessthan.svg';
-import homeArrow from '../assets/svgs/homeArrow.svg';
+import homeArrow from '../assets/svgs/arrow.png';
 import Book from './Book';
 import BookModal from './BookModal';
 
@@ -52,8 +52,8 @@ const Home: React.FC<Props> = ({ user, books }) => {
             <div style={styles.topRight}>
               <div style={styles.greeting}>Bem vindo, {user.name} </div>
               <div style={styles.circle}>
-                <img src={bracket} style={styles.bracket} />
                 <img src={homeArrow} style={styles.arrow} />
+                <img src={bracket} style={styles.bracket} />
               </div>
             </div>
           </div>
@@ -64,19 +64,17 @@ const Home: React.FC<Props> = ({ user, books }) => {
           </div>
           <div style={styles.pageInfo}>
             <div style={styles.pages}>Páginas {pagesTotal}</div>
-            <div style={styles.circle}></div>
-            <img style={styles.less} src={homeLessthan} />
-            <div style={styles.circle}></div>
-            <img style={styles.greater} src={homeGreaterThan} />
+            <div style={styles.circleBottom}>
+              <img style={styles.less} src={homeLessthan} />
+            </div>
+            <div style={styles.circleBottom}>
+              <img style={styles.greater} src={homeGreaterThan} />
+            </div>
           </div>
         </div>
       </div>
       {open ? (
-        <BookModal
-          open={open}
-          setOpen={setOpen}
-          bookId={bookId}
-        />
+        <BookModal open={open} setOpen={setOpen} bookId={bookId} />
       ) : null}
     </>
   );
@@ -95,8 +93,8 @@ const styles: StyleSheet = {
     width: '83%',
   },
   heading: {
-    marginTop: '5%',
-    marginBottom: '5%',
+    marginTop: '1.5%',
+    marginBottom: '1.5%',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -133,23 +131,23 @@ const styles: StyleSheet = {
     backgroundImage: `url(${homeCircle} )`,
     width: '32px',
     height: '32px',
-
     bottom: '90.1%',
-
     boxSizing: 'border-box',
     transform: 'matrix(-1, 0, 0, 1, 0, 0)',
   },
   bracket: {
+    marginTop: '5px',
     width: '5.5px',
     height: '14px',
-
-    border: '1px solid #333333',
+    backgroundBlendMode: 'darken',
+    transform: 'matrix(-1, 0, 0, 1, 0, 0)',
   },
   arrow: {
     width: '10.5px',
     height: '8px',
-
-    border: '1px solid #333333',
+    transform: 'rotate(180deg)',
+    left: 'calc(50% - 10.5px/2 + 1.75px)',
+    top: 'calc(50% - 8px/2)',
   },
   bookContainer: {
     display: 'flex',
@@ -177,18 +175,16 @@ const styles: StyleSheet = {
     height: '32px',
     boxSizing: 'border-box',
     transform: 'matrix(-1, 0, 0, 1, 0, 0)',
+    marginLeft: '1%'
   },
   less: {
     width: '4px',
     height: '8px',
-
-    border: '1px solid rgba(51, 51, 51, 0.4)',
     transform: 'matrix(-1, 0, 0, 1, 0, 0)',
   },
   greater: {
     width: '4px',
     height: '8px',
-
-    border: '1px solid #333333',
+    transform: 'rotate(180deg)',
   },
 };

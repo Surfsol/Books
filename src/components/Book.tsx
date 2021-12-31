@@ -8,27 +8,104 @@ type Props = {
 
 const Book: React.FC<Props> = ({ book }) => {
   return (
-    <Grid container direction='row' justifyContent='center' alignItems='center' style={styles.container}>
-      <Grid>{book.imageUrl}</Grid>
-      <Grid>{book.title}</Grid>
-      {book.authors.map((item) => (
-        <Grid>{item}</Grid>
-      ))}
-      <Grid>{book.pageCount}</Grid>
-      <Grid>{book.publisher}</Grid>
-      <Grid>{book.published}</Grid>
-    </Grid>
+    <div style={styles.container}>
+      <img style={styles.imageUrl} src={book.imageUrl} />
+
+      <div style={styles.bookInfo}>
+        <div style={styles.topInfo}>
+          <div style={styles.title}>{book.title}</div>
+          {book.authors.map((item) => (
+            <div style={styles.authors}>{item}</div>
+          ))}
+        </div>
+        <div style={styles.pageCount}>
+         <div>{book.pageCount} pages</div> 
+          <div>Editor {book.publisher}</div>
+          <div>Published {book.published}</div>
+        </div>
+      </div>
+    </div>
   );
 };
 export default Book;
 
 const styles: StyleSheet = {
   container: {
-    width: '20%',
-    height: '20%',
+    display: 'flex',
+    flexDirection: 'row',
+   // alignItems: 'center',
+    width: '272px',
+    height: '160px',
     background: '#FFFFFF',
     boxShadow: '0px 6px 24px rgba(84, 16, 95, 0.13)',
     borderRadius: '4px',
-    marginLeft: '1.2%'
+    marginLeft: '1.2%',
+    marginBottom: '2%',
+    //marginRight: '1'
+  },
+  imageUrl: {
+    width: '81px',
+    height: '122px',
+    margin: '19px 16px 19px 16px',
+    filter: 'drop-shadow(0px 6px 9px rgba(0, 0, 0, 0.15))',
+  },
+  bookInfo: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    textAlign:'start',
+    marginTop: '16px',
+    alignContent: 'space-between'
+  },
+  topInfo: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+  },
+  title: {
+    fontFamily: 'Heebo',
+    fontStyle: 'normal',
+    fontWeight: 500,
+    fontSize: '14px',
+    lineHeight: '20px',
+    color: '#333333',
+  },
+  authors: {
+    fontFamily: 'Heebo',
+    fontStyle: 'normal',
+    fontSize: '12px',
+    lineHeight: '20px',
+    color: '#AB2680',
+  },
+  pageCount: {
+    display: 'flex',
+    flexDirection: 'column',
+    fontFamily: 'Heebo',
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    fontSize: '12px',
+    lineHeight: '20px',
+    color: '#999999',
+    textAlign:'start',
+    marginTop: 'auto',
+    marginBottom: '16px',
+    marginRight: '5px',
+    padding:'auto',
+  },
+  publisher: {
+    fontFamily: 'Heebo',
+    fontStyle: 'normal',
+    fontWeight: 500,
+    fontSize: '.75rem',
+    //lineHeight: '2rem',
+    color: '#333333',
+  },
+  published: {
+    fontFamily: 'Heebo',
+    fontStyle: 'normal',
+    fontWeight: 500,
+    fontSize: '.75rem',
+    //lineHeight: '2rem',
+    color: '#333333',
   },
 };

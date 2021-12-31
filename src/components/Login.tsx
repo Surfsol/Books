@@ -7,6 +7,8 @@ import email2Enter from '../assets/svgs/email2Enter.svg';
 import incorrectBackground from '../assets/svgs/incorrectBackground.svg';
 import senhaSvg from '../assets/svgs/senhaSvg.svg';
 import emailSvg from '../assets/svgs/emailSvg.svg';
+import senhaSvgMobile from '../assets/svgs/senhaSvgMobile.svg';
+import emailSvgMobile from '../assets/svgs/emailSvgMobile.svg';
 import triangleIncorrect from '../assets/svgs/triangleIncorrect.svg';
 import { StyleSheet, Creds, User } from '../types';
 import { logInApi, refreshTokenApi } from '../services/api';
@@ -14,12 +16,17 @@ import { getToken } from './utils/tokens';
 import jwt_decode from 'jwt-decode';
 import { decryptUser } from './utils/tokens';
 import Home from './Home';
+import { useMediaQuery } from 'react-responsive';
 
 const Login: React.FC = () => {
   const [creds, setCreds] = useState<Creds>({});
   const [incorrectPass, setIncorrectPass] = useState<boolean>();
   const [user, setUser] = useState<User>();
   const [books, setBooks] = useState<any>();
+
+  const isMobile = useMediaQuery({
+    query: '(max-width: 850px)',
+  });
 
   const handleCreds = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCreds({
@@ -56,27 +63,29 @@ const Login: React.FC = () => {
     <Home user={user} books={books} />
   ) : (
     <div style={styles.container}>
-      <img src={logo} style={styles.logo} />
-      <div style={styles.books}>Books</div>
-      <div style={styles.emailBackground}></div>
+      <img src={logo} style={isMobile ? styles.logoMobile : styles.logo} />
+      <div style={isMobile ? styles.booksMobile : styles.books}>Books</div>
+      <div style={isMobile ? styles.emailMobile : styles.emailBackground}></div>
       <input
-        style={styles.emailInput}
+        style={isMobile ? styles.emailInputMobile : styles.emailInput}
         type='email'
         value={creds.email}
         name='email'
         onChange={handleCreds}
       />
-      <div style={styles.passwordBackground}></div>
+      <div
+        style={isMobile ? styles.passwordMobile : styles.passwordBackground}
+      ></div>
       <input
-        style={styles.passwordInput}
+        style={isMobile ? styles.passwordInputMobile : styles.passwordInput}
         type='password'
         value={creds.password}
         name='password'
         onChange={handleCreds}
       />
-      <div style={styles.emailSvg}></div>
+      <div style={isMobile ? styles.emailSvgMobile : styles.emailSvg}></div>
       <div style={styles.email2Enter}></div>
-      <div style={styles.senhaSvg}></div>
+      <div style={isMobile ? styles.senhaSvgMobile : styles.senhaSvg}></div>
       <div style={styles.enter} onClick={handleLogin}>
         Enter
       </div>
@@ -109,12 +118,34 @@ const styles: StyleSheet = {
     left: '115px',
     top: '274px',
   },
+  logoMobile: {
+    position: 'absolute',
+    width: '104.4px',
+    height: '36px',
+    left: '5%',
+    right: '62.38%',
+    top: '32.81%',
+    bottom: '61.56%',
+  },
   books: {
     position: 'absolute',
     width: '77px',
     height: '40px',
     left: '236px',
     top: '272px',
+    fontFamily: 'Heebo',
+    fontStyle: 'normal',
+    fontWeight: '300',
+    fontSize: '28px',
+    lineHeight: '40px',
+    color: '#FFFFFF',
+  },
+  booksMobile: {
+    position: 'absolute',
+    width: '77px',
+    height: '40px',
+    left: '137px',
+    top: '208px',
     fontFamily: 'Heebo',
     fontStyle: 'normal',
     fontWeight: '300',
@@ -145,6 +176,37 @@ const styles: StyleSheet = {
     backgroundColor: 'transparent',
     border: '0 transparent',
   },
+  emailInputMobile: {
+    position: 'absolute',
+    width: '259px',
+    height: '24px',
+    left: '29px',
+    top: '324px',
+    fontFamily: 'Heebo',
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    fontSize: '16px',
+    lineHeight: '24px',
+    color: '#FFFFFF',
+    backgroundColor: 'transparent',
+    border: '0 transparent',
+  },
+  emailMobile: {
+    backgroundImage: `url(${emailBackground} )`,
+    position: 'absolute',
+    width: '288px',
+    height: '60px',
+    left: '16px',
+    top: '296px',
+  },
+  passwordMobile: {
+    backgroundImage: `url(${passwordBackground} )`,
+    position: 'absolute',
+    width: '288px',
+    height: '60px',
+    left: '16px',
+    top: '372px',
+  },
   passwordBackground: {
     backgroundImage: `url(${passwordBackground} )`,
     position: 'absolute',
@@ -168,6 +230,21 @@ const styles: StyleSheet = {
     backgroundColor: 'transparent',
     border: '0 transparent',
   },
+  passwordInputMobile: {
+    position: 'absolute',
+    width: '158px',
+    height: '24px',
+    left: '29px',
+    top: '400px',
+    fontFamily: 'Heebo',
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    fontSize: '16px',
+    lineHeight: '24px',
+    color: '#FFFFFF',
+    backgroundColor: 'transparent',
+    border: '0 transparent',
+  },
   emailSvg: {
     backgroundImage: `url(${emailSvg} )`,
     position: 'absolute',
@@ -175,6 +252,15 @@ const styles: StyleSheet = {
     height: '16px',
     left: '131px',
     top: '368px',
+    opacity: '0.5',
+  },
+  emailSvgMobile: {
+    backgroundImage: `url(${emailSvgMobile} )`,
+    position: 'absolute',
+    width: '259px',
+    height: '16px',
+    left: '29px',
+    top: '304px',
     opacity: '0.5',
   },
   email2Enter: {
@@ -192,6 +278,15 @@ const styles: StyleSheet = {
     height: '16px',
     left: '131px',
     top: '444px',
+    opacity: '0.5',
+  },
+  senhaSvgMobile: {
+    backgroundImage: `url(${senhaSvgMobile} )`,
+    position: 'absolute',
+    width: '158px',
+    height: '16px',
+    left: '29px',
+    top: '380px',
     opacity: '0.5',
   },
   enter: {

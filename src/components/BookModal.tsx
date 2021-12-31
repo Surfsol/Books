@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Modal from '@mui/material/Modal';
 import { EachBook, StyleSheet } from '../types';
+import { useMediaQuery } from 'react-responsive';
 
 type Props = {
   open: boolean;
@@ -10,6 +11,10 @@ type Props = {
 
 const BookModal: React.FC<Props> = ({ open, setOpen, bookId }) => {
   const handleClose = () => setOpen();
+
+  const isMobile = useMediaQuery({
+    query: '(max-width: 850px)',
+  });
 
   const authorList = () => {
     let list = [];
@@ -35,12 +40,18 @@ const BookModal: React.FC<Props> = ({ open, setOpen, bookId }) => {
         aria-labelledby='modal-modal-title'
         aria-describedby='modal-modal-description'
       >
-        <div style={styles.containerStyle}>
-          <img style={styles.imageUrl} src={bookId?.imageUrl} />
-
-          <div style={styles.bookInfo}>
-            <div style={styles.topInfo}>
-              <div style={styles.title}>{bookId?.title}</div>
+        <div
+          style={isMobile ? styles.containerStyleMobile : styles.containerStyle}
+        >
+          <img
+            style={isMobile ? styles.imageUrlMobile : styles.imageUrl}
+            src={bookId?.imageUrl}
+          />
+          <div style={isMobile ? styles.bookInfoMobile : styles.bookInfo}>
+            <div style={isMobile ? styles.topInfoMobile : styles.topInfo}>
+              <div style={isMobile ? styles.titleMobile : styles.title}>
+                {bookId?.title}
+              </div>
               <div style={styles.authors}>{authorList()}</div>
             </div>
             <div style={styles.allInfo}>
@@ -87,15 +98,16 @@ const styles: StyleSheet = {
     boxShadow: '0px 16px 80px rgba(0, 0, 0, 0.32)',
     borderRadius: '4px',
   },
-  container: {
+  containerStyleMobile: {
     display: 'flex',
-    flexDirection: 'row',
-    width: '272px',
-    height: '160px',
+    flexDirection: 'column',
+    width: '288px',
+    justifyContent: 'center',
+    alignItems: 'center',
     background: '#FFFFFF',
-    boxShadow: '0px 6px 24px rgba(84, 16, 95, 0.13)',
     borderRadius: '4px',
-    marginLeft: '1.2%',
+    margin: 'auto',
+    marginTop: '5%',
     marginBottom: '2%',
   },
   imageUrl: {
@@ -103,6 +115,12 @@ const styles: StyleSheet = {
     width: '349px',
     height: '512.29px',
     margin: '48px 0 48px 48px',
+  },
+  imageUrlMobile: {
+    marginTop: '5%',
+    width: '240px',
+    height: '351px',
+    filter: 'drop-shadow(0px 11.9008px 17.8512px rgba(0, 0, 0, 0.3))',
   },
   bookInfo: {
     display: 'flex',
@@ -112,10 +130,24 @@ const styles: StyleSheet = {
     margin: '48px',
     alignContent: 'space-between',
   },
+  bookInfoMobile: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: '48px',
+    alignContent: 'space-between',
+  },
   topInfo: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-start',
+  },
+  topInfoMobile: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    textAlign: 'center',
   },
   title: {
     fontFamily: 'Heebo',
@@ -125,6 +157,15 @@ const styles: StyleSheet = {
     lineHeight: '40px',
     color: '#333333',
     width: '276px',
+  },
+  titleMobile: {
+    fontFamily: 'Heebo',
+    fontStyle: 'normal',
+    fontWeight: 500,
+    fontSize: '28px',
+    lineHeight: '40px',
+    color: '#333333',
+    // width: '240px',
   },
   authors: {
     fontFamily: 'Heebo',

@@ -9,6 +9,7 @@ import homeLessthan from '../assets/svgs/homeLessthan.svg';
 import homeArrow from '../assets/svgs/arrow.png';
 import Book from './Book';
 import BookModal from './BookModal';
+import { useMediaQuery } from 'react-responsive';
 
 type Props = {
   user: User;
@@ -18,6 +19,14 @@ type Props = {
 const Home: React.FC<Props> = ({ user, books }) => {
   const [open, setOpen] = useState<boolean>(false);
   const [bookId, setBookId] = useState<EachBook | undefined>();
+
+  const isMobile = useMediaQuery({
+    query: '(max-width: 850px)',
+  });
+
+  const notMobile = useMediaQuery({
+    query: '(min-width: 851px)',
+  });
 
   let booksDisplay: any = [];
   if (books) {
@@ -50,14 +59,16 @@ const Home: React.FC<Props> = ({ user, books }) => {
               <div style={styles.books}>Books</div>
             </div>
             <div style={styles.topRight}>
-              <div style={styles.greeting}>Bem vindo, {user.name} </div>
+              {notMobile ? (
+                <div style={styles.greeting}>Bem vindo, {user.name} </div>
+              ) : null}
               <div style={styles.circle}>
                 <img src={homeArrow} style={styles.arrow} />
                 <img src={bracket} style={styles.bracket} />
               </div>
             </div>
           </div>
-          <div style={styles.bookContainer}>
+          <div style={isMobile ? styles.bookMobile : styles.bookContainer}>
             {booksDisplay.map((item: EachBook) => {
               return <Book book={item} key={item.id} handleOpen={handleOpen} />;
             })}
@@ -155,6 +166,12 @@ const styles: StyleSheet = {
     alignItems: 'stretch',
     flexWrap: 'wrap',
   },
+  bookMobile: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+  },
   pageInfo: {
     display: 'flex',
     justifyContent: 'flex-end',
@@ -175,7 +192,7 @@ const styles: StyleSheet = {
     height: '32px',
     boxSizing: 'border-box',
     transform: 'matrix(-1, 0, 0, 1, 0, 0)',
-    marginLeft: '1%'
+    marginLeft: '1%',
   },
   less: {
     width: '4px',

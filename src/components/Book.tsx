@@ -4,9 +4,10 @@ import { EachBook, StyleSheet } from '../types';
 
 type Props = {
   book: EachBook;
+  handleOpen: (n:string)=>void
 };
 
-const Book: React.FC<Props> = ({ book }) => {
+const Book: React.FC<Props> = ({ book, handleOpen }) => {
 
   const authorList = () => {
     let list = [];
@@ -25,15 +26,12 @@ const Book: React.FC<Props> = ({ book }) => {
   };
 
   return (
-    <div style={styles.container}>
+    <div style={styles.container} onClick={()=>handleOpen(book.id)}>
       <img style={styles.imageUrl} src={book.imageUrl} />
 
       <div style={styles.bookInfo}>
         <div style={styles.topInfo}>
           <div style={styles.title}>{book.title}</div>
-          {/* {book.authors.map((item) => (
-            <div style={styles.authors}>{item}</div>
-          ))} */}
           <div style={styles.authors}>{authorList()}</div>
         </div>
         <div style={styles.pageCount}>

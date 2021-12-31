@@ -7,6 +7,23 @@ type Props = {
 };
 
 const Book: React.FC<Props> = ({ book }) => {
+
+  const authorList = () => {
+    let list = [];
+    if (book.authors.length > 1) {
+      for (let i = 0; i < book.authors.length; i++) {
+        if (i < book.authors.length-1) {
+          list.push(`${book.authors[i]}, `);
+        } else {
+          list.push(`${book.authors[i]}`);
+        }
+      }
+    } else {
+      list = book.authors
+    }
+    return list
+  };
+
   return (
     <div style={styles.container}>
       <img style={styles.imageUrl} src={book.imageUrl} />
@@ -14,12 +31,13 @@ const Book: React.FC<Props> = ({ book }) => {
       <div style={styles.bookInfo}>
         <div style={styles.topInfo}>
           <div style={styles.title}>{book.title}</div>
-          {book.authors.map((item) => (
+          {/* {book.authors.map((item) => (
             <div style={styles.authors}>{item}</div>
-          ))}
+          ))} */}
+          <div style={styles.authors}>{authorList()}</div>
         </div>
         <div style={styles.pageCount}>
-         <div>{book.pageCount} pages</div> 
+          <div>{book.pageCount} pages</div>
           <div>Editor {book.publisher}</div>
           <div>Published {book.published}</div>
         </div>
@@ -33,7 +51,7 @@ const styles: StyleSheet = {
   container: {
     display: 'flex',
     flexDirection: 'row',
-   // alignItems: 'center',
+    // alignItems: 'center',
     width: '272px',
     height: '160px',
     background: '#FFFFFF',
@@ -53,9 +71,9 @@ const styles: StyleSheet = {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    textAlign:'start',
+    textAlign: 'start',
     marginTop: '16px',
-    alignContent: 'space-between'
+    alignContent: 'space-between',
   },
   topInfo: {
     display: 'flex',
@@ -86,11 +104,12 @@ const styles: StyleSheet = {
     fontSize: '12px',
     lineHeight: '20px',
     color: '#999999',
-    textAlign:'start',
+    textAlign: 'start',
     marginTop: 'auto',
     marginBottom: '16px',
     marginRight: '5px',
-    padding:'auto',
+    padding: 'auto',
+    height: '60px',
   },
   publisher: {
     fontFamily: 'Heebo',

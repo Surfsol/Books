@@ -42,11 +42,6 @@ const Home: React.FC<Props> = ({ user, books }) => {
           </div>
         </div>
         <div
-          // container
-          // direction='row'
-          // justifyContent='space-between'
-          // alignItems='center'
-          // spacing={4}
           style={styles.bookContainer}
         >
           {booksDisplay.map((item: EachBook) => {
@@ -64,11 +59,10 @@ const styles: StyleSheet = {
     display: 'flex',
     justifyContent: 'center',
     backgroundImage: `url(${booksBackground} )`,
-    //position: 'absolute',
+
     width: '100%',
     height: '100vh',
-    // left: '0px',
-    // top: '0px',
+
   },
   content: {
     width: '83%',

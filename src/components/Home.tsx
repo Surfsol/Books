@@ -51,7 +51,7 @@ const Home: React.FC<Props> = ({ user, books }) => {
 
   return (
     <>
-      <div style={styles.container}>
+      <div style={isMobile ? styles.containerMobile : styles.container}>
         <div style={styles.content}>
           <div style={styles.heading}>
             <div style={styles.title}>
@@ -97,8 +97,19 @@ const styles: StyleSheet = {
     display: 'flex',
     justifyContent: 'center',
     backgroundImage: `url(${booksBackground} )`,
-    width: '100%',
+    backgroundPosition: 'center',
+    backgroundSize: 'cover',
+    width: '100vw',
     height: '100vh',
+    position: 'relative',
+  },
+  containerMobile: {
+    display: 'flex',
+    justifyContent: 'center',
+    backgroundImage: `url(${booksBackground} )`,
+    backgroundPosition: 'center',
+    backgroundSize: 'cover',
+    width: '100vw',
   },
   content: {
     width: '83%',

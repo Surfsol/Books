@@ -86,7 +86,10 @@ const Login: React.FC = () => {
       <div style={isMobile ? styles.emailSvgMobile : styles.emailSvg}></div>
       <div style={isMobile ? styles.passEnterMobile : styles.passEnter}></div>
       <div style={isMobile ? styles.senhaSvgMobile : styles.senhaSvg}></div>
-      <div style={isMobile ? styles.enterMobile : styles.enter} onClick={handleLogin}>
+      <div
+        style={isMobile ? styles.enterMobile : styles.enter}
+        onClick={handleLogin}
+      >
         Enter
       </div>
       {incorrectPass ? (

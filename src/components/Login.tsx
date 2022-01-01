@@ -44,7 +44,7 @@ const Login: React.FC = () => {
       setBooks(data)
       if(user && !data) fetchBooks(setBooks)
     }
-  }, [books]);
+  }, [books, user]);
 
   const isMobile = useMediaQuery({
     query: '(max-width: 850px)',

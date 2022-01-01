@@ -1,3 +1,34 @@
+# User Login
+
+User enters email and password on Login screen.
+A post request is sent:
+1. if email and password are not valid the user is shown a message that the login credentials were valid.
+2. if login email and password are valid user data is returned along with an authorization token and refresh token.
+
+The authorization and refreshToken are stored in local storage.
+
+The user data is encrypted and stored in local storage.
+
+On Login.tsx the authorization token is pulled from localstorage and decoded.  If the token has not expired the user will be logged in and taken to the Home page.
+
+If the authorization token has expired, the refreshToken will be sent, which should return an updated authorization token and refreshToken.  
+
+If the authorization token is expired and the refreshToken fails to return new authorization and refreshTokens.  The user will be prompted to login again.
+
+If the user refreshes the app, the user information on the 'user' variable in useState will not persist.  Therefore, the authorization token from localstorage will be read, if the token has not yet expired, the user information will update the 'user' variable, and if the books data is empty, a request will be sent to fetch books data.
+
+However, if the authorization token has expired, the user will be prompted to login again.
+
+# Fetching data from the api
+Upon sending a valid email and password on login.  A GET request is made to fetch all books.
+
+Data is stored on a useState variable in Login.tsx, then persisted in redux.
+
+On Home.tsx book data is retrieved from the redux store.
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

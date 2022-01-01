@@ -17,12 +17,25 @@ import jwt_decode from 'jwt-decode';
 import { decryptUser } from './utils/tokens';
 import Home from './Home';
 import { useMediaQuery } from 'react-responsive';
+import { useDispatch } from 'react-redux';
+import booksAction from '../redux/actions/booksAction';
+import { fetchBooks } from '../services/api';
 
 const Login: React.FC = () => {
   const [creds, setCreds] = useState<Creds>({});
   const [incorrectPass, setIncorrectPass] = useState<boolean>();
   const [user, setUser] = useState<User>();
   const [books, setBooks] = useState<any>();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (books?.data.length > 0) {
+      dispatch(booksAction(books.data));
+    } 
+    if(user && !books){
+      fetchBooks(setBooks)
+    }
+  }, [books]);
 
   const isMobile = useMediaQuery({
     query: '(max-width: 850px)',
@@ -60,7 +73,7 @@ const Login: React.FC = () => {
   }, []);
 
   return user ? (
-    <Home user={user} books={books} />
+    <Home user={user}/>
   ) : (
     <div style={styles.container}>
       <img src={logo} style={isMobile ? styles.logoMobile : styles.logo} />

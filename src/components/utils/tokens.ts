@@ -1,6 +1,7 @@
 const CryptoJS = require('crypto-js');
 
 const setToken = (key: string | null, value: string | null) => {
+  if(typeof value !== 'string') value = JSON.stringify(value)
   if (key && value) localStorage.setItem(key, value);
 };
 

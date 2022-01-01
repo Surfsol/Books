@@ -10,27 +10,32 @@ import homeArrow from '../assets/svgs/arrow.png';
 import Book from './Book';
 import BookModal from './BookModal';
 import { useMediaQuery } from 'react-responsive';
+import { useSelector } from 'react-redux';
+import { IRootState } from '../redux/rootReducer';
 
 type Props = {
-  user: User;
-  books: any;
+  user: User 
 };
 
-const Home: React.FC<Props> = ({ user, books }) => {
+const Home: React.FC<Props> = ({ user  }) => {
   const [open, setOpen] = useState<boolean>(false);
   const [bookId, setBookId] = useState<EachBook | undefined>();
-  const [page, setPage] = useState<number>(1)
+  const [page, setPage] = useState<number>(1);
+
+  const booksSelector = useSelector(
+    (state: IRootState) => state.bookReducer.books
+  );
 
   const handlePage = (number: number) => {
-    const min = 1
-    const max = books.data.length / 12
-    if(page < max && number > 0){
-      setPage(page + 1)
+    const min = 1;
+    const max = booksSelector?.length / 12;
+    if (page < max && number > 0) {
+      setPage(page + 1);
     }
-    if(page > min && number < 0){
-      setPage(page - 1)
+    if (page > min && number < 0) {
+      setPage(page - 1);
     }
-  }
+  };
 
   const isMobile = useMediaQuery({
     query: '(max-width: 850px)',
@@ -41,9 +46,9 @@ const Home: React.FC<Props> = ({ user, books }) => {
   });
 
   let booksDisplay: any = [];
-  if (books) {
+  if (booksSelector?.length > 0) {
     for (let i = page - 1; i < page + 11; i++) {
-      booksDisplay.push(books.data[i]);
+      booksDisplay.push(booksSelector[i]);
     }
   }
 
@@ -58,7 +63,8 @@ const Home: React.FC<Props> = ({ user, books }) => {
     }
   };
 
-  const total = books ? Math.floor(books.data.length / 12) : 0;
+  const total =
+    booksSelector?.length > 0 ? Math.floor(booksSelector.length / 12) : 0;
   const pagesTotal = `${page} de ${total}`;
 
   return (
@@ -80,17 +86,21 @@ const Home: React.FC<Props> = ({ user, books }) => {
               </div>
             </div>
           </div>
-          <div style={isMobile ? styles.bookMobile : styles.bookContainer}>
-            {booksDisplay.map((item: EachBook) => {
-              return <Book book={item} key={item.id} handleOpen={handleOpen} />;
-            })}
-          </div>
+          {booksSelector?.length > 0 ? (
+            <div style={isMobile ? styles.bookMobile : styles.bookContainer}>
+              {booksDisplay?.map((item: EachBook) => {
+                return (
+                  <Book book={item} key={item.id} handleOpen={handleOpen} />
+                );
+              })}
+            </div>
+          ) : null}
           <div style={styles.pageInfo}>
             <div style={styles.pages}>Páginas {pagesTotal}</div>
-            <div style={styles.circleBottom} onClick={()=>handlePage(-1)}>
+            <div style={styles.circleBottom} onClick={() => handlePage(-1)}>
               <img style={styles.less} src={homeLessthan} />
             </div>
-            <div style={styles.circleBottom} onClick={()=>handlePage(1)}>
+            <div style={styles.circleBottom} onClick={() => handlePage(1)}>
               <img style={styles.greater} src={homeGreaterThan} />
             </div>
           </div>

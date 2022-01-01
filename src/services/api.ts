@@ -3,17 +3,22 @@ import { setToken, encryptUser, getToken } from '../components/utils/tokens';
 
 const apiUrl = 'https://books.ioasys.com.br/api/v1/';
 
-const storeTokens = (res: any, setUser: any, setBooks:any) => {
+const storeTokens = (res: any, setUser: any, setBooks: any) => {
   setToken('ioasys-auth', res.headers.get('authorization'));
   setToken('ioasys-refresh-token', res.headers.get('refresh-token'));
-  fetchBooks(setBooks)
+  fetchBooks(setBooks);
   res.json().then((data: any) => {
     encryptUser(data);
     setUser(data);
   });
 };
 
-const logInApi = (creds: Creds, setUser: any, setIncorrectPass: any, setBooks:any) => {
+const logInApi = (
+  creds: Creds,
+  setUser: any,
+  setIncorrectPass: any,
+  setBooks: any
+) => {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -31,11 +36,14 @@ const logInApi = (creds: Creds, setUser: any, setIncorrectPass: any, setBooks:an
     .catch((e) => console.log);
 };
 
-const refreshTokenApi = (token: string, setUser: any, setBooks:any) => {
-    const authToken = getToken('ioasys-auth');
+const refreshTokenApi = (token: string, setUser: any, setBooks: any) => {
+  const authToken = getToken('ioasys-auth');
   const requestOptions: any = {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', authorization: `bearer ${authToken}` },
+    headers: {
+      'Content-Type': 'application/json',
+      authorization: `bearer ${authToken}`,
+    },
     body: { refreshToken: token },
   };
   fetch(`${apiUrl}auth/refresh-token`, requestOptions)
@@ -56,7 +64,7 @@ const fetchBooks = (setBooks: any) => {
       authorization: `bearer ${authToken}`,
     },
   };
-  console.log({ requestOptions });
+
   fetch(`${apiUrl}/books?page=1&amount=25&category=biographies`, requestOptions)
     .then((res) => {
       if (res.status === 200) {

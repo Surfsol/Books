@@ -26,7 +26,7 @@ Data is stored on a useState variable in Login.tsx and in localStorage, then per
 
 On Home.tsx book data is retrieved from the redux store.
 
-If the user refreshes the app the books data will persist in localStorage, however if the user's token has expired, they will not be able to access the Home page.  Either a refresh token will update the expired token or the user will need to login again.
+If the user refreshes the app, data will persist in localStorage, however if the user's token has expired, they will not be able to access the Home page.  Either a refresh token will update the expired token or the user will need to login again.
 
 
 

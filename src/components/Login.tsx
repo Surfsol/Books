@@ -3,7 +3,7 @@ import backgroundCover from '../assets/svgs/backgroundCover.svg';
 import logo from '../assets/svgs/logo.svg';
 import emailBackground from '../assets/svgs/emailBackground.svg';
 import passwordBackground from '../assets/svgs/emailback2.svg';
-import email2Enter from '../assets/svgs/email2Enter.svg';
+import passEnter from '../assets/svgs/email2Enter.svg';
 import incorrectBackground from '../assets/svgs/incorrectBackground.svg';
 import senhaSvg from '../assets/svgs/senhaSvg.svg';
 import emailSvg from '../assets/svgs/emailSvg.svg';
@@ -84,9 +84,12 @@ const Login: React.FC = () => {
         onChange={handleCreds}
       />
       <div style={isMobile ? styles.emailSvgMobile : styles.emailSvg}></div>
-      <div style={styles.email2Enter}></div>
+      <div style={isMobile ? styles.passEnterMobile : styles.passEnter}></div>
       <div style={isMobile ? styles.senhaSvgMobile : styles.senhaSvg}></div>
-      <div style={styles.enter} onClick={handleLogin}>
+      <div
+        style={isMobile ? styles.enterMobile : styles.enter}
+        onClick={handleLogin}
+      >
         Enter
       </div>
       {incorrectPass ? (
@@ -106,7 +109,6 @@ const styles: StyleSheet = {
     backgroundImage: `url(${backgroundCover} )`,
     backgroundPosition: 'center',
     backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
     width: '100vw',
     height: '100vh',
     position: 'relative',
@@ -263,13 +265,21 @@ const styles: StyleSheet = {
     top: '304px',
     opacity: '0.5',
   },
-  email2Enter: {
-    backgroundImage: `url(${email2Enter} )`,
+  passEnter: {
+    backgroundImage: `url(${passEnter} )`,
     position: 'absolute',
     width: '85px',
     height: '36px',
     left: '386px',
     top: '448px',
+  },
+  passEnterMobile: {
+    backgroundImage: `url(${passEnter} )`,
+    position: 'absolute',
+    width: '85px',
+    height: '36px',
+    left: '203px',
+    top: '384px',
   },
   senhaSvg: {
     backgroundImage: `url(${senhaSvg} )`,
@@ -295,6 +305,19 @@ const styles: StyleSheet = {
     height: '20px',
     left: '406px',
     top: '456px',
+    lineHeight: '20px',
+    fontFamily: 'Heebo',
+    fontStyle: 'normal',
+    fontWeight: '500',
+    fontSize: '16px',
+    color: '#B22E6F',
+  },
+  enterMobile: {
+    position: 'absolute',
+    width: '44px',
+    height: '20px',
+    left: '223px',
+    top: '392px',
     lineHeight: '20px',
     fontFamily: 'Heebo',
     fontStyle: 'normal',

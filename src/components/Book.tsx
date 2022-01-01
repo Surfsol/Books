@@ -1,32 +1,30 @@
 import React from 'react';
-import Grid from '@mui/material/Grid';
 import { EachBook, StyleSheet } from '../types';
 
 type Props = {
   book: EachBook;
-  handleOpen: (n:string)=>void
+  handleOpen: (n: string) => void;
 };
 
 const Book: React.FC<Props> = ({ book, handleOpen }) => {
-
   const authorList = () => {
     let list = [];
     if (book.authors.length > 1) {
       for (let i = 0; i < book.authors.length; i++) {
-        if (i < book.authors.length-1) {
+        if (i < book.authors.length - 1) {
           list.push(`${book.authors[i]}, `);
         } else {
           list.push(`${book.authors[i]}`);
         }
       }
     } else {
-      list = book.authors
+      list = book.authors;
     }
-    return list
+    return list;
   };
 
   return (
-    <div style={styles.container} onClick={()=>handleOpen(book.id)}>
+    <div style={styles.container} onClick={() => handleOpen(book.id)}>
       <img style={styles.imageUrl} src={book.imageUrl} />
       <div style={styles.bookInfo}>
         <div style={styles.topInfo}>

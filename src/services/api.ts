@@ -70,6 +70,7 @@ const fetchBooks = (setBooks: any) => {
       if (res.status === 200) {
         res.json().then((data: any) => {
           setBooks(data);
+          setToken('ioasys-data', data)
         });
       }
     })

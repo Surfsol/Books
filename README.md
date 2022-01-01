@@ -22,9 +22,11 @@ However, if the authorization token has expired, the user will be prompted to lo
 # Fetching data from the api
 Upon sending a valid email and password on login.  A GET request is made to fetch all books.
 
-Data is stored on a useState variable in Login.tsx, then persisted in redux.
+Data is stored on a useState variable in Login.tsx and in localStorage, then persisted in redux.
 
 On Home.tsx book data is retrieved from the redux store.
+
+If the user refreshes the app the books data will persist in localStorage, however if the user's token has expired, they will not be able to access the Home page.  Either a refresh token will update the expired token or the user will need to login again.
 
 
 

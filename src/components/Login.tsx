@@ -20,6 +20,8 @@ import { useMediaQuery } from 'react-responsive';
 import { useDispatch } from 'react-redux';
 import booksAction from '../redux/actions/booksAction';
 import { fetchBooks } from '../services/api';
+import { useSelector } from 'react-redux';
+import { IRootState } from '../redux/rootReducer';
 
 const Login: React.FC = () => {
   const [creds, setCreds] = useState<Creds>({});
@@ -28,12 +30,19 @@ const Login: React.FC = () => {
   const [books, setBooks] = useState<any>();
   const dispatch = useDispatch();
 
+  const booksSelector = useSelector(
+    (state: IRootState) => state.bookReducer.books
+  );
+
+
   useEffect(() => {
     if (books?.data.length > 0) {
       dispatch(booksAction(books.data));
     } 
-    if(user && !books){
-      fetchBooks(setBooks)
+    if(!books){
+      let data = JSON.parse(getToken('ioasys-data'))
+      setBooks(data)
+      if(user && !data) fetchBooks(setBooks)
     }
   }, [books]);
 
